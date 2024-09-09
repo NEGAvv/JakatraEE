@@ -30,16 +30,25 @@ public class FirstServlet extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-
         PrintWriter out = response.getWriter();
+
+        String name = request.getParameter("name");
+        String age = request.getParameter("age");
+
         out.println("<html>");
         out.println("<head>");
-        out.println("<title>First Servlet</title>");
+        out.println("<title>POST Servlet</title>");
         out.println("</head>");
         out.println("<body>");
-        out.println("<h1>" + message + "</h1>");
-        out.println("<p>POST method</p>");
+        if (name != null && age != null) {
+            out.println("<h1>Welcome, " + name + "!</h1>");
+            out.println("<p>Your age is " + age + "</p>");
+        } else {
+            out.println("<h1>POST method</h1>");
+            out.println("<p>Please write down 'name' and 'age' .</p>");
+        }
         out.println("</body>");
         out.println("</html>");
     }
+
 }
