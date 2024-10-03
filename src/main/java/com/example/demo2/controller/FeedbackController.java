@@ -1,4 +1,4 @@
-package com.example.demo2;
+package com.example.demo2.controller;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;

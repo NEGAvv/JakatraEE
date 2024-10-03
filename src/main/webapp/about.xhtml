@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <title>About My Projects</title>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #e0f7fa;
+            font-family: 'Poppins', sans-serif;
+            background-color: #fafafa;
             margin: 0;
             padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         .header {
             background-color: #00796b;
@@ -28,6 +32,19 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             line-height: 1.6;
+            flex-grow: 1;
+        }
+        label {
+            font-size: 1.1rem;
+            color: #333;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
         }
         p {
             color: #333;
@@ -37,13 +54,45 @@
             padding: 0;
             list-style: none;
         }
-        li {
+
+        .tech-table {
+            width: 100%;
             background-color: #00796b;
             color: white;
-            padding: 15px;
-            margin-bottom: 10px;
             border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-spacing: 0;
         }
+
+        .tech-item {
+            padding: 10px;
+            border-bottom: 1px solid #004d40;
+        }
+
+        .tech-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #e0f2f1;
+        }
+
+        .tech-description {
+            font-size: 1rem;
+            color: #b2dfdb;
+            margin-top: 5px;
+        }
+
+        .tech-table tr:nth-child(even) {
+            background-color: #009688;
+        }
+
+        .tech-table tr:hover {
+            background-color: #007a6c;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
         .button {
             display: inline-block;
             margin: 15px 10px;
@@ -66,6 +115,10 @@
             color: white;
             margin-top: auto;
         }
+        .message {
+            color: red;
+            font-size: 0.9rem;
+        }
     </style>
 </h:head>
 <h:body>
@@ -75,14 +128,27 @@
 
     <div class="content">
         <p>I have worked on various university projects involving modern web frameworks and technologies. Below is a summary of my experience:</p>
-        <ul>
-            <li><strong>Laravel:</strong> Developed full-stack applications, focusing on database management, routing, and Blade templates.</li>
-            <li><strong>React:</strong> Built dynamic and interactive UIs with component-based architecture and state management.</li>
-            <li><strong>Jakarta EE:</strong> Created enterprise-level applications using Java servlets, JSP, and EJB for web services.</li>
-            <li><strong>Django:</strong> Developed web apps with Python, using Django's powerful ORM and admin interface.</li>
-            <li><strong>Next.js:</strong> Implemented server-side rendering and static site generation for high-performance React apps.</li>
-            <li><strong>ASP.NET:</strong> Built secure web applications with C# using ASP.NET MVC and Razor pages.</li>
-        </ul>
+
+        <h:dataTable value="#{technologyController.technologyList}" var="tech" styleClass="tech-table">
+            <h:column>
+                <div class="tech-item">
+                    <div class="tech-name">#{tech.name}</div>
+                    <div class="tech-description">#{tech.description}</div>
+                </div>
+            </h:column>
+        </h:dataTable>
+
+        <h:form>
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel for="newTechName" value="Technology Name:" />
+                <h:inputText id="newTechName" value="#{technologyController.technology.name}" />
+
+                <h:outputLabel for="newTechDescription" value="Description:" />
+                <h:inputText id="newTechDescription" value="#{technologyController.technology.description}" />
+            </h:panelGrid>
+            <h:commandButton value="Add Technology" action="#{technologyController.addTechnology}" styleClass="button" />
+            <h:messages styleClass="message"/>
+        </h:form>
 
         <h:form>
             <h:commandButton value="Home" action="index.xhtml" styleClass="button" />
