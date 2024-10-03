@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+    <title>Feedback</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fafafa;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background-color: #673ab7;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: white;
+            font-size: 2.2rem;
+            margin: 0;
+        }
+        .content {
+            padding: 40px;
+            max-width: 800px;
+            margin: auto;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            flex-grow: 1;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 1.1rem;
+            color: #333;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .button {
+            margin: 15px 10px;
+            padding: 12px 20px;
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .button:hover {
+            background-color: #e64a19;
+        }
+        .message {
+            color: red;
+            font-size: 0.9rem;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #673ab7;
+            color: white;
+            margin-top: auto;
+        }
+        .button-group {
+            display: flex;
+            /*justify-content: space-evenly;*/
+        }
+    </style>
+</h:head>
+<h:body>
+    <div class="header">
+        <h1>We Value Your Feedback</h1>
+    </div>
+
+    <div class="content">
+        <h:form>
+            <h:panelGrid styleClass="form-grid">
+                <h:outputLabel value="First Name:" for="firstName"/>
+                <h:inputText id="firstName" value="#{feedbackController.firstName}" required="true" requiredMessage="First name is required"/>
+
+                <h:outputLabel value="Last Name:" for="lastName"/>
+                <h:inputText id="lastName" value="#{feedbackController.lastName}" required="true" requiredMessage="Last name is required"/>
+
+                <h:outputLabel value="Email:" for="email"/>
+                <h:inputText id="email" value="#{feedbackController.email}" required="true" requiredMessage="Email is required"/>
+            </h:panelGrid>
+
+            <h:commandButton value="Submit" action="#{feedbackController.submitFeedback}" styleClass="button"/>
+            <h:messages styleClass="message"/>
+        </h:form>
+
+        <h:form class="button-group">
+            <h:commandButton value="Home" action="index.xhtml" styleClass="button"/>
+            <h:commandButton value="About Projects" action="about.xhtml" styleClass="button"/>
+        </h:form>
+    </div>
+
+    <footer>
+        <p>2024 Alina`s Company</p>
+    </footer>
+</h:body>
+</html>

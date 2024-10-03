@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+    <title>About My Projects</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #e0f7fa;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #00796b;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: white;
+            font-size: 2.2rem;
+            margin: 0;
+        }
+        .content {
+            padding: 40px;
+            max-width: 900px;
+            margin: auto;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            line-height: 1.6;
+        }
+        p {
+            color: #333;
+            font-size: 1.1rem;
+        }
+        ul {
+            padding: 0;
+            list-style: none;
+        }
+        li {
+            background-color: #00796b;
+            color: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .button {
+            display: inline-block;
+            margin: 15px 10px;
+            padding: 12px 20px;
+            background-color: #0288d1;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .button:hover {
+            background-color: #01579b;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #00796b;
+            color: white;
+            margin-top: auto;
+        }
+    </style>
+</h:head>
+<h:body>
+    <div class="header">
+        <h1>About My Projects</h1>
+    </div>
+
+    <div class="content">
+        <p>I have worked on various university projects involving modern web frameworks and technologies. Below is a summary of my experience:</p>
+        <ul>
+            <li><strong>Laravel:</strong> Developed full-stack applications, focusing on database management, routing, and Blade templates.</li>
+            <li><strong>React:</strong> Built dynamic and interactive UIs with component-based architecture and state management.</li>
+            <li><strong>Jakarta EE:</strong> Created enterprise-level applications using Java servlets, JSP, and EJB for web services.</li>
+            <li><strong>Django:</strong> Developed web apps with Python, using Django's powerful ORM and admin interface.</li>
+            <li><strong>Next.js:</strong> Implemented server-side rendering and static site generation for high-performance React apps.</li>
+            <li><strong>ASP.NET:</strong> Built secure web applications with C# using ASP.NET MVC and Razor pages.</li>
+        </ul>
+
+        <h:form>
+            <h:commandButton value="Home" action="index.xhtml" styleClass="button" />
+            <h:commandButton value="Feedback" action="feedback.xhtml" styleClass="button" />
+        </h:form>
+    </div>
+
+    <footer>
+        <p>2024 My University Projects</p>
+    </footer>
+</h:body>
+</html>
