@@ -3,38 +3,32 @@ package com.example.demo2.container;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
+import com.example.demo2.logger.FileLogger;
 import com.example.demo2.model.Technology;
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Named
-@SessionScoped
+@ApplicationScoped
 public class TechnologyContainer implements Serializable {
-    private Technology technology;
-    private List<Technology> technologyList;
+    private FileLogger fileLogger = new FileLogger();
 
-    public TechnologyContainer() {
-        this.technologyList = new ArrayList<>();
-    }
-
-    public Technology getTechnology() {
-        return technology;
-    }
-
-    public void setTechnology(Technology technology) {
-        this.technology = technology;
-    }
+    private final List<Technology> technologyList = new ArrayList<>();
+    private final AtomicLong idCounter = new AtomicLong();
 
     public List<Technology> getTechnologyList() {
         return technologyList;
     }
 
-    public void addTechnology(Technology technology) {
-        this.technologyList.add(technology);
+    public void addTechnology(String name, String description) {
+        Technology t = new Technology(idCounter.incrementAndGet(), name, description);
+        fileLogger.log("Added technology: " + t.getName());
+        technologyList.add(t);
     }
 
-    public void removeTechnology(Technology technology) {
-        this.technologyList.remove(technology);
+    public void removeTechnology(Technology t) {
+        fileLogger.log("Removing tech to remove: " + t);
+        technologyList.remove(t);
     }
 }

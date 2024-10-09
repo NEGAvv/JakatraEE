@@ -5,11 +5,10 @@ import com.example.demo2.model.Technology;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.faces.view.ViewScoped;
-import jakarta.faces.application.FacesMessage;
-import jakarta.faces.context.FacesContext;
 import jakarta.validation.Valid;
 import java.io.Serializable;
 import java.util.List;
+import com.example.demo2.logger.FileLogger;
 
 @Named
 @ViewScoped
@@ -21,11 +20,18 @@ public class TechnologyController implements Serializable {
     @Valid
     private Technology technology = new Technology();
 
-    public String addTechnology() {
-        technologyContainer.addTechnology(new Technology(technology.getName(), technology.getDescription()));
-        technology = new Technology();
+    private final FileLogger fileLogger = new FileLogger();
 
-        return "about.xhtml?faces-redirect=true";
+    public void addTechnology() {
+        technologyContainer.addTechnology(technology.getName(), technology.getDescription());
+
+        fileLogger.log("Added technology: " + technology.getName());
+        technology = new Technology();
+    }
+
+    public void removeTechnology(Technology techToRemove) {
+        fileLogger.log("Removing tech to remove: " + techToRemove);
+        technologyContainer.removeTechnology(techToRemove);
     }
 
     public Technology getTechnology() {

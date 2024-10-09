@@ -119,6 +119,19 @@
             color: red;
             font-size: 0.9rem;
         }
+        .remove-button {
+            background-color: #e53935;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .remove-button:hover {
+            background-color: #d32f2f;
+        }
     </style>
 </h:head>
 <h:body>
@@ -129,24 +142,36 @@
     <div class="content">
         <p>I have worked on various university projects involving modern web frameworks and technologies. Below is a summary of my experience:</p>
 
-        <h:dataTable value="#{technologyController.technologyList}" var="tech" styleClass="tech-table">
+        <h:dataTable id="techTable" value="#{technologyController.technologyList}" var="tech" styleClass="tech-table">
             <h:column>
                 <div class="tech-item">
                     <div class="tech-name">#{tech.name}</div>
                     <div class="tech-description">#{tech.description}</div>
+                    <h:form>
+                        <h:commandButton value="Remove" action="#{technologyController.removeTechnology(tech)}"
+                                     styleClass="remove-button"
+                                         update="techTable"/>
+                    </h:form>
                 </div>
             </h:column>
         </h:dataTable>
 
+
         <h:form>
             <h:panelGrid columns="2" cellpadding="5">
                 <h:outputLabel for="newTechName" value="Technology Name:" />
-                <h:inputText id="newTechName" value="#{technologyController.technology.name}" />
+                <h:inputText id="newTechName" value="#{technologyController.technology.name}" required="true">
+                    <f:validateLength minimum="1" maximum="100"/>
+                </h:inputText>
 
                 <h:outputLabel for="newTechDescription" value="Description:" />
-                <h:inputText id="newTechDescription" value="#{technologyController.technology.description}" />
+                <h:inputText id="newTechDescription" value="#{technologyController.technology.description}" required="true">
+                    <f:validateLength minimum="1" maximum="500"/>
+                </h:inputText>
             </h:panelGrid>
+
             <h:commandButton value="Add Technology" action="#{technologyController.addTechnology}" styleClass="button" />
+
             <h:messages styleClass="message"/>
         </h:form>
 
