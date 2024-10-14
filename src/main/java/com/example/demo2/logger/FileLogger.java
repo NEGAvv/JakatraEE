@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 public class FileLogger {
     private final String logFilePath = "D:\\JakatraEEApp\\glassfish7\\glassfish\\domains\\domain1\\logs\\file.log";
 
-    public void log(String message) {
+    public synchronized  void log(String message) {
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         String logMessage = String.format("[%s] %s", timestamp, message);
 

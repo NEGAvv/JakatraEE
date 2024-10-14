@@ -37,7 +37,10 @@
         label {
             font-size: 1.1rem;
             color: #333;
+            display: block;
+            margin-bottom: 5px;
         }
+
         input[type="text"] {
             padding: 10px;
             font-size: 1rem;
@@ -46,6 +49,7 @@
             width: 100%;
             box-sizing: border-box;
         }
+
         p {
             color: #333;
             font-size: 1.1rem;
@@ -67,6 +71,9 @@
         }
 
         .tech-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 10px;
             border-bottom: 1px solid #004d40;
         }
@@ -81,6 +88,9 @@
             font-size: 1rem;
             color: #b2dfdb;
             margin-top: 5px;
+            margin-left: 10px;
+            margin-right: 5px;
+            margin-bottom: 0;
         }
 
         .tech-table tr:nth-child(even) {
@@ -123,7 +133,7 @@
             background-color: #e53935;
             border: none;
             color: white;
-            padding: 8px 16px;
+            padding: 8px 18px;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease-in-out;
@@ -131,6 +141,10 @@
 
         .remove-button:hover {
             background-color: #d32f2f;
+        }
+
+        .delete-form {
+            margin-left: auto;
         }
     </style>
 </h:head>
@@ -142,43 +156,32 @@
     <div class="content">
         <p>I have worked on various university projects involving modern web frameworks and technologies. Below is a summary of my experience:</p>
 
-        <h:dataTable id="techTable" value="#{technologyController.technologyList}" var="tech" styleClass="tech-table">
+        <h:dataTable value="#{technologies}" var="tech" styleClass="tech-table">
             <h:column>
                 <div class="tech-item">
                     <div class="tech-name">#{tech.name}</div>
                     <div class="tech-description">#{tech.description}</div>
-                    <h:form>
-                        <h:commandButton value="Remove" action="#{technologyController.removeTechnology(tech)}"
-                                     styleClass="remove-button"
-                                         update="techTable"/>
-                    </h:form>
+                    <form action="#{mvc.basePath}/technologies/delete" method="post" class="delete-form">
+                        <input type="hidden" name="id" value="#{tech.id}" />
+                        <button type="submit" class="remove-button" >Delete</button>
+                    </form>
                 </div>
             </h:column>
         </h:dataTable>
 
+        <form id="form"  action="" method="post">
+            <h2>Add a new Technology</h2>
 
-        <h:form>
-            <h:panelGrid columns="2" cellpadding="5">
-                <h:outputLabel for="newTechName" value="Technology Name:" />
-                <h:inputText id="newTechName" value="#{technologyController.technology.name}" required="true">
-                    <f:validateLength minimum="1" maximum="100"/>
-                </h:inputText>
+            <h:panelGrid columns="2" cellpadding="5" >
+                <label for="newTechName">Technology Name:</label>
+                <input id="newTechName" type="text" name="newTechName" required="required"/>
 
-                <h:outputLabel for="newTechDescription" value="Description:" />
-                <h:inputText id="newTechDescription" value="#{technologyController.technology.description}" required="true">
-                    <f:validateLength minimum="1" maximum="500"/>
-                </h:inputText>
+                <label for="newTechDescription">Description:</label>
+                <input id="newTechDescription" type="text" name="newTechDescription" required="required"/>
             </h:panelGrid>
 
-            <h:commandButton value="Add Technology" action="#{technologyController.addTechnology}" styleClass="button" />
-
-            <h:messages styleClass="message"/>
-        </h:form>
-
-        <h:form>
-            <h:commandButton value="Home" action="index.xhtml" styleClass="button" />
-            <h:commandButton value="Feedback" action="feedback.xhtml" styleClass="button" />
-        </h:form>
+            <button type="submit" class="button">Add technology</button>
+        </form>
     </div>
 
     <footer>

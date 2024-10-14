@@ -1,33 +1,25 @@
 package com.example.demo2.model;
 
-import java.io.Serializable;
 import jakarta.validation.constraints.NotBlank;
-import java.util.Objects;
+
+import java.io.Serializable;
 
 public class Technology implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    private Long id;
-
+    private static int idCounter = 1;
+    private int id;
     @NotBlank(message = "Name is required.")
     private String name;
     @NotBlank(message = "Description is required.")
     private String description;
 
-    public Technology() {
-    }
-
-    public Technology(Long id, String name, String description) {
-        this.id = id;
+    public Technology(String name, String description) {
+        this.id = idCounter++;
         this.name = name;
         this.description = description;
     }
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -44,19 +36,6 @@ public class Technology implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Technology that = (Technology) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 
     @Override

@@ -1,44 +1,57 @@
 package com.example.demo2.controller;
 
 import com.example.demo2.container.TechnologyContainer;
+import com.example.demo2.logger.FileLogger;
 import com.example.demo2.model.Technology;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import jakarta.faces.view.ViewScoped;
-import jakarta.validation.Valid;
+import jakarta.mvc.Controller;
+import jakarta.mvc.Models;
+import jakarta.mvc.View;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.FormParam;
 import java.io.Serializable;
 import java.util.List;
 import com.example.demo2.logger.FileLogger;
 
-@Named
-@ViewScoped
+import jakarta.ws.rs.core.Response;
+
+@Path("technologies")
+@RequestScoped
+@Controller
 public class TechnologyController implements Serializable {
+    @Inject
+    private Models models;
 
     @Inject
     private TechnologyContainer technologyContainer;
 
-    @Valid
-    private Technology technology = new Technology();
+    private FileLogger fileLogger = new FileLogger();
 
-    private final FileLogger fileLogger = new FileLogger();
 
-    public void addTechnology() {
-        technologyContainer.addTechnology(technology.getName(), technology.getDescription());
-
-        fileLogger.log("Added technology: " + technology.getName());
-        technology = new Technology();
+    @GET
+    @View("technologies.xhtml")
+    public void showTechnologies() {
+        models.put("technologies", technologyContainer.getTechnologies());
     }
 
-    public void removeTechnology(Technology techToRemove) {
-        fileLogger.log("Removing tech to remove: " + techToRemove);
-        technologyContainer.removeTechnology(techToRemove);
+    @POST
+    public Response addTechnology(@FormParam("newTechName") String newTechName, @FormParam("newTechDescription") String newTechDescription) {
+        Technology newTech = new Technology(newTechName, newTechDescription);
+        technologyContainer.addTechnology(newTech);
+        fileLogger.log("Added technology: " + newTech);
+        return Response.ok("redirect:technologies").build();
     }
 
-    public Technology getTechnology() {
-        return technology;
+    @POST
+    @Path("/delete")
+    public Response deleteTechnology(@FormParam("id") int id) {
+        fileLogger.log("Removing tech to remove: " + technologyContainer.getTechnology(id));
+        technologyContainer.deleteById(id);
+        return Response.ok("redirect:technologies").build();
     }
 
-    public List<Technology> getTechnologyList() {
-        return technologyContainer.getTechnologyList();
-    }
 }
